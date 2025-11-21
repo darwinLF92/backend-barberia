@@ -2,7 +2,7 @@ from rest_framework import generics, permissions, serializers, status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from .serializers import (
-    RegistroSerializer, ConfirmarCorreoSerializer, CrearContrasenaSerializer
+    RegistroSerializer, ConfirmarCorreoSerializer, CrearContrasenaSerializer, PerfilSerializer
 )
 
 class RegistroView(generics.CreateAPIView):
@@ -35,3 +35,11 @@ def crear_contrasena(request):
         raise serializers.ValidationError(s.errors)
     s.save()
     return Response({"detalle": "Contraseña creada. Ya puedes iniciar sesión."}, status=status.HTTP_200_OK)
+
+
+class PerfilView(generics.RetrieveUpdateAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = PerfilSerializer
+
+    def get_object(self):
+        return self.request.user

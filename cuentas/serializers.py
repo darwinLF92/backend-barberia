@@ -134,3 +134,16 @@ class CrearContrasenaSerializer(serializers.Serializer):
         u.set_password(pwd)  # maneja hash seguro
         u.save(update_fields=["password"])
         return u
+
+
+class PerfilSerializer(serializers.ModelSerializer):
+    usuario = serializers.CharField(source="username", read_only=True)
+    correo = serializers.EmailField(read_only=True)
+    cui = serializers.CharField(read_only=True)
+
+    class Meta:
+        model = Usuario
+        fields = (
+            "id", "cui", "usuario", "nombres", "apellidos", "direccion",
+            "fecha_nacimiento", "estatura", "telefono", "correo"
+        )
