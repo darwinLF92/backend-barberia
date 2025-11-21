@@ -1,5 +1,5 @@
 # catalogo/views.py
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView
 from .models import Servicio, Paquete, BannerInicio
 from .serializers import ServicioSerializer, PaqueteSerializer, BannerInicioSerializer
 from rest_framework.permissions import AllowAny
@@ -9,10 +9,20 @@ class ServiciosListView(ListAPIView):
     serializer_class = ServicioSerializer
     permission_classes = [AllowAny]   # 👈 público
 
+class ServicioDetailView(RetrieveAPIView):
+    queryset = Servicio.objects.all()
+    serializer_class = ServicioSerializer
+    permission_classes = [AllowAny]
+
 class PaquetesListView(ListAPIView):
     queryset = Paquete.objects.all()
     serializer_class = PaqueteSerializer
     permission_classes = [AllowAny]   # 👈 público
+
+class PaqueteDetailView(RetrieveAPIView):
+    queryset = Paquete.objects.all()
+    serializer_class = PaqueteSerializer
+    permission_classes = [AllowAny]
 
 class BannersListView(ListAPIView):
     queryset = BannerInicio.objects.all()
